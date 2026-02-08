@@ -50,29 +50,6 @@ export function AddTaskDialog({
       return;
     }
 
-    const optimisticTask = {
-      id: Date.now(),
-      todo: title,
-      completed: false,
-      userId: 5,
-      status: defaultStatus,
-      description,
-      startDate: format(startDate, 'yyyy-MM-dd'),
-      endDate: format(endDate, 'yyyy-MM-dd'),
-      comments: Math.floor(Math.random() * 25) + 1,
-      attachments: Math.floor(Math.random() * 15) + 1,
-      checklist:
-        Math.random() > 0.4
-          ? {
-              done: Math.floor(Math.random() * 8) + 1,
-              total: Math.floor(Math.random() * 8) + 3,
-            }
-          : undefined,
-      avatars: [1, 2, 3]
-        .sort(() => Math.random() - 0.5)
-        .slice(0, Math.floor(Math.random() * 3) + 1),
-    };
-
     addTodo(
       {
         apiData: {
@@ -80,7 +57,24 @@ export function AddTaskDialog({
           completed: false,
           userId: 5,
         },
-        optimisticTask,
+        taskData: {
+          status: defaultStatus,
+          description,
+          startDate: format(startDate, 'yyyy-MM-dd'),
+          endDate: format(endDate, 'yyyy-MM-dd'),
+          comments: Math.floor(Math.random() * 25) + 1,
+          attachments: Math.floor(Math.random() * 15) + 1,
+          checklist:
+            Math.random() > 0.4
+              ? {
+                  done: Math.floor(Math.random() * 8) + 1,
+                  total: Math.floor(Math.random() * 8) + 3,
+                }
+              : undefined,
+          avatars: [1, 2, 3]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, Math.floor(Math.random() * 3) + 1),
+        },
       },
       {
         onSuccess: () => {

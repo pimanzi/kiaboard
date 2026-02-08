@@ -40,7 +40,7 @@ export function StatusGroup({
         onOpenChange={setDialogOpen}
         defaultStatus={status}
       />
-      
+
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         {/* Group Header */}
         <div className="flex items-center justify-between mb-3">

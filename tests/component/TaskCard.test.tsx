@@ -1,6 +1,6 @@
 /// <reference types="@testing-library/jest-dom" />
 import { render, screen } from '@testing-library/react';
-import { TaskCard } from '@/features/tasks/kanban/card';
+import { TaskCard } from '@/components/tasks/TaskCard';
 import type { EnhancedTodo } from '@/contexts/TasksContext';
 import { TODO_STATUSES } from '@/api/todo';
 

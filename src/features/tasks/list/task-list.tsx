@@ -92,7 +92,7 @@ export function TaskList({
       : statusConfig.filter((config) => config.status === statusFilter);
 
   return (
-    <div className="space-y-6">
+    <div data-testid="task-list" className="space-y-6">
       {visibleGroups.map((config) => (
         <StatusGroup
           key={config.status}

@@ -19,9 +19,15 @@ export function TaskActions({ children, onEdit, onDelete }: TaskActionsProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent className="w-40 p-1" align="end" side="right" sideOffset={8}>
+      <PopoverContent
+        className="w-40 p-1"
+        align="end"
+        side="right"
+        sideOffset={8}
+      >
         <Button
           variant="ghost"
+          role="menuitem"
           className="w-full justify-start gap-2 text-[13px] text-ink hover:bg-brand-soft hover:text-brand"
           onClick={onEdit}
         >
@@ -30,6 +36,7 @@ export function TaskActions({ children, onEdit, onDelete }: TaskActionsProps) {
         </Button>
         <Button
           variant="ghost"
+          role="menuitem"
           className="w-full justify-start gap-2 text-[13px] text-rose hover:bg-rose-soft hover:text-rose"
           onClick={onDelete}
         >

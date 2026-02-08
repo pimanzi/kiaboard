@@ -1,3 +1,4 @@
+/// <reference types="@testing-library/jest-dom" />
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DeleteTaskDialog } from '@/features/tasks/delete-task-dialog';
@@ -29,9 +30,9 @@ describe('DeleteTaskDialog', () => {
         open={true}
         onOpenChange={mockOnOpenChange}
         onConfirm={mockOnConfirm}
-      />
+      />,
     );
-    
+
     expect(screen.getByText('deleteConfirmTitle')).toBeInTheDocument();
     expect(screen.getByText('deleteConfirmMessage')).toBeInTheDocument();
   });
@@ -42,9 +43,9 @@ describe('DeleteTaskDialog', () => {
         open={false}
         onOpenChange={mockOnOpenChange}
         onConfirm={mockOnConfirm}
-      />
+      />,
     );
-    
+
     expect(screen.queryByText('deleteConfirmTitle')).not.toBeInTheDocument();
   });
 
@@ -55,12 +56,12 @@ describe('DeleteTaskDialog', () => {
         open={true}
         onOpenChange={mockOnOpenChange}
         onConfirm={mockOnConfirm}
-      />
+      />,
     );
-    
+
     const deleteButton = screen.getByText('deleteTask');
     await user.click(deleteButton);
-    
+
     expect(mockOnConfirm).toHaveBeenCalledTimes(1);
   });
 
@@ -71,12 +72,12 @@ describe('DeleteTaskDialog', () => {
         open={true}
         onOpenChange={mockOnOpenChange}
         onConfirm={mockOnConfirm}
-      />
+      />,
     );
-    
+
     const cancelButton = screen.getByText('cancel');
     await user.click(cancelButton);
-    
+
     expect(mockOnOpenChange).toHaveBeenCalledWith(false);
   });
 
@@ -87,9 +88,9 @@ describe('DeleteTaskDialog', () => {
         onOpenChange={mockOnOpenChange}
         onConfirm={mockOnConfirm}
         isDeleting={true}
-      />
+      />,
     );
-    
+
     expect(screen.getByText('deleting')).toBeInTheDocument();
   });
 
@@ -100,12 +101,12 @@ describe('DeleteTaskDialog', () => {
         onOpenChange={mockOnOpenChange}
         onConfirm={mockOnConfirm}
         isDeleting={true}
-      />
+      />,
     );
-    
+
     const deleteButton = screen.getByText('deleting');
     const cancelButton = screen.getByText('cancel');
-    
+
     expect(deleteButton).toBeDisabled();
     expect(cancelButton).toBeDisabled();
   });

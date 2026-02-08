@@ -118,7 +118,6 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
           isCollapsed ? 'w-24' : 'w-60'
         } bg-surface border-r border-border flex-col transition-all duration-300 ease-in-out`}
       >
-        {/* Logo area */}
         <div className="flex items-center justify-between p-4 border-b border-border">
           {isCollapsed ? (
             <div className="flex items-center justify-between w-full gap-2">

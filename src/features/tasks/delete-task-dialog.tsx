@@ -9,7 +9,6 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { useDeleteTodo } from '@/hooks/useDeleteTodo';
-import { toast } from 'sonner';
 
 interface DeleteTaskDialogProps {
   open: boolean;
@@ -37,11 +36,7 @@ export function DeleteTaskDialog({
     } else if (taskId) {
       deleteTodo(taskId, {
         onSuccess: () => {
-          toast.success(t('taskDeleted'));
           onOpenChange(false);
-        },
-        onError: () => {
-          toast.error(t('taskDeleteError'));
         },
       });
     }

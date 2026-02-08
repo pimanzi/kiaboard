@@ -59,3 +59,46 @@ export function hasItem(key: string): boolean {
     return false;
   }
 }
+
+/**
+ * Clear tasks from localStorage (just  for debugging/resetting)
+ */
+export function clearTasks(): void {
+  try {
+    localStorage.removeItem('tasks');
+    localStorage.removeItem('localTaskIds');
+    console.log(
+      ' Tasks cleared from localStorage. Refresh the page to reload from API.',
+    );
+  } catch (error) {
+    console.error('Failed to clear tasks from localStorage:', error);
+  }
+}
+
+/**
+ * Track a task ID as locally created (not on the real API)
+ */
+export function addLocalTaskId(id: number): void {
+  const localIds = getItem<number[]>('localTaskIds') || [];
+  if (!localIds.includes(id)) {
+    localIds.push(id);
+    setItem('localTaskIds', localIds);
+  }
+}
+
+/**
+ * Remove a task ID from local tracking
+ */
+export function removeLocalTaskId(id: number): void {
+  const localIds = getItem<number[]>('localTaskIds') || [];
+  const filtered = localIds.filter((localId) => localId !== id);
+  setItem('localTaskIds', filtered);
+}
+
+/**
+ * Check if a task ID is locally created (not on the real API)
+ */
+export function isLocalTaskId(id: number): boolean {
+  const localIds = getItem<number[]>('localTaskIds') || [];
+  return localIds.includes(id);
+}

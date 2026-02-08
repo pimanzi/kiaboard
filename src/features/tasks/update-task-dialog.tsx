@@ -27,7 +27,6 @@ import {
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { useUpdateTodo } from '@/hooks/useUpdateTodo';
-import { toast } from 'sonner';
 import type { EnhancedTodo } from '@/contexts/TasksContext';
 import { TODO_STATUSES, type TodoStatus } from '@/api/todo';
 
@@ -77,19 +76,18 @@ export function UpdateTaskDialog({
       { id: task.id, updates },
       {
         onSuccess: () => {
-          toast.success(t('taskUpdated'));
           onOpenChange(false);
         },
-        onError: () => {
-          toast.error(t('taskUpdateError'));
-        },
-      }
+      },
     );
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-125">
+      <DialogContent
+        className="sm:max-w-125"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>{t('updateTask')}</DialogTitle>
         </DialogHeader>
@@ -119,15 +117,26 @@ export function UpdateTaskDialog({
 
           <div className="space-y-2">
             <Label>{t('taskStatus')}</Label>
-            <Select value={status} onValueChange={(value) => setStatus(value as TodoStatus)}>
+            <Select
+              value={status}
+              onValueChange={(value) => setStatus(value as TodoStatus)}
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={TODO_STATUSES.TODO}>{t('statusTodo')}</SelectItem>
-                <SelectItem value={TODO_STATUSES.IN_PROGRESS}>{t('statusInProgress')}</SelectItem>
-                <SelectItem value={TODO_STATUSES.NEEDS_REVIEW}>{t('statusNeedsReview')}</SelectItem>
-                <SelectItem value={TODO_STATUSES.DONE}>{t('statusDone')}</SelectItem>
+                <SelectItem value={TODO_STATUSES.TODO}>
+                  {t('statusTodo')}
+                </SelectItem>
+                <SelectItem value={TODO_STATUSES.IN_PROGRESS}>
+                  {t('statusInProgress')}
+                </SelectItem>
+                <SelectItem value={TODO_STATUSES.NEEDS_REVIEW}>
+                  {t('statusNeedsReview')}
+                </SelectItem>
+                <SelectItem value={TODO_STATUSES.DONE}>
+                  {t('statusDone')}
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -141,7 +150,7 @@ export function UpdateTaskDialog({
                     variant="outline"
                     className={cn(
                       'w-full justify-start text-left font-normal',
-                      !startDate && 'text-muted-foreground'
+                      !startDate && 'text-muted-foreground',
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
@@ -167,7 +176,7 @@ export function UpdateTaskDialog({
                     variant="outline"
                     className={cn(
                       'w-full justify-start text-left font-normal',
-                      !endDate && 'text-muted-foreground'
+                      !endDate && 'text-muted-foreground',
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />

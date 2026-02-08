@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from 'react';
 import { useTodos } from '@/hooks/useTodos';
 import type { Todo } from '@/api/todo';
 import { getItem, setItem } from '@/lib/localStorage';
@@ -31,10 +37,27 @@ export function TasksProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const storedTasks = getItem<EnhancedTodo[]>('tasks');
-    
+
+    // Only use stored tasks if they look valid (reasonable IDs)
     if (storedTasks && storedTasks.length > 0) {
-      setTasks(storedTasks);
-      setIsInitialized(true);
+      const validTasks = storedTasks.filter((task) => {
+        return task.id > 0;
+      });
+
+      if (validTasks.length > 0) {
+        setTasks(validTasks);
+        setIsInitialized(true);
+        // Update localStorage with cleaned tasks
+        if (validTasks.length !== storedTasks.length) {
+          setItem('tasks', validTasks);
+        }
+      } else if (data?.todos) {
+        // If no valid tasks, use fresh data from API
+        const enhancedTasks = data.todos.map(enhanceTodo);
+        setTasks(enhancedTasks);
+        setItem('tasks', enhancedTasks);
+        setIsInitialized(true);
+      }
     } else if (data?.todos) {
       const enhancedTasks = data.todos.map(enhanceTodo);
       setTasks(enhancedTasks);
@@ -55,7 +78,7 @@ export function TasksProvider({ children }: { children: ReactNode }) {
 
   const updateTask = (id: number, updates: Partial<EnhancedTodo>) => {
     setTasks((prev) =>
-      prev.map((task) => (task.id === id ? { ...task, ...updates } : task))
+      prev.map((task) => (task.id === id ? { ...task, ...updates } : task)),
     );
   };
 

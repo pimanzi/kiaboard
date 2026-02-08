@@ -49,7 +49,10 @@ export function KanbanBoard({
   const hasActiveFilter = statusFilter !== 'all';
 
   return (
-    <div className="bg-surface dark:bg-surface grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+    <div
+      data-testid="kanban-board"
+      className="bg-surface dark:bg-surface grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4"
+    >
       <Column
         title={t('columnTodo')}
         status={TODO_STATUSES.TODO}

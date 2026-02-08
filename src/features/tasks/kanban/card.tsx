@@ -8,7 +8,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { useDeleteTodo } from '@/hooks/useDeleteTodo';
-import { toast } from 'sonner';
 import type { EnhancedTodo } from '@/contexts/TasksContext';
 import { TaskActions } from '../task-actions';
 import { DeleteTaskDialog } from '../delete-task-dialog';
@@ -41,17 +40,16 @@ export function TaskCard({
   const handleDelete = () => {
     deleteTodo(todo.id, {
       onSuccess: () => {
-        toast.success(t('taskDeleted'));
         setDeleteDialogOpen(false);
-      },
-      onError: () => {
-        toast.error(t('taskDeleteError'));
       },
     });
   };
 
   return (
-    <div className="bg-white dark:bg-surface-elevated rounded-xl p-4 border border-border/50 hover:border-border hover:shadow-sm transition-all cursor-pointer">
+    <div
+      data-testid="task-card"
+      className="bg-white dark:bg-surface-elevated rounded-xl p-4 border border-border/50 hover:border-border hover:shadow-sm transition-all cursor-pointer"
+    >
       {/* Date */}
       {date && (
         <div className="flex items-center gap-2 text-[12px] text-muted-text mb-2">

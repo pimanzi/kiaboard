@@ -7,7 +7,7 @@ export const queryClient = new QueryClient({
       gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
       refetchOnWindowFocus: true,
       retry: 1,
-      refetchOnMount: false, // Don't refetch if data is fresh
+      refetchOnMount: false, // Does not  refetch if data is fresh
     },
     mutations: {
       retry: 1,

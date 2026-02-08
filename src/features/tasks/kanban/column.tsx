@@ -54,7 +54,7 @@ export function Column({
         onOpenChange={setDialogOpen}
         defaultStatus={status}
       />
-      <div className=" rounded-xl p-3 h-fit">
+      <div data-testid="kanban-column" className=" rounded-xl p-3 h-fit">
         {/* Column Header */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">

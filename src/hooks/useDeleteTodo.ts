@@ -1,25 +1,36 @@
 import { useMutation } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
 import { deleteTodo } from '@/api/todo';
 import { useTasks } from '@/contexts/TasksContext';
-import type { EnhancedTodo } from '@/contexts/TasksContext';
+import { isLocalTaskId, removeLocalTaskId } from '@/lib/localStorage';
 
 export function useDeleteTodo() {
-  const { deleteTask, addTask, tasks } = useTasks();
+  const { deleteTask } = useTasks();
+  const { t } = useTranslation('tasks');
 
-  return useMutation<{ id: number; isDeleted: boolean }, Error, number, EnhancedTodo | undefined>({
+  return useMutation<void, Error, number>({
     mutationFn: async (id: number) => {
-      const result = await deleteTodo(id);
-      deleteTask(id);
-      return result;
-    },
-    onMutate: (id) => {
-      const previousTask = tasks.find(t => t.id === id);
-      return previousTask;
-    },
-    onError: (_error, _id, previousTask) => {
-      if (previousTask) {
-        addTask(previousTask);
+      // Skip API call for locally created tasks (DummyJSON doesn't persist them)
+      if (isLocalTaskId(id)) {
+        return; // Just return, no API call needed
       }
+
+      // Call the API for real tasks
+      await deleteTodo(id);
+    },
+    onSuccess: (_data, id) => {
+      // Remove from local tracking if it was a local task
+      if (isLocalTaskId(id)) {
+        removeLocalTaskId(id);
+      }
+      // Delete from localStorage for all tasks
+      deleteTask(id);
+      toast.success(t('taskDeleted'));
+    },
+    onError: (error) => {
+      console.error('Failed to delete task:', error);
+      toast.error(t('taskDeleteFailed'));
     },
   });
 }

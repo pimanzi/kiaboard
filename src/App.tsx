@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { Loader } from '@/components/ui/loader';
+import { NotFound } from '@/pages/NotFound';
 
 const HRTasksHub = lazy(() => import('@/pages/HRTasksHub').then(m => ({ default: m.HRTasksHub })));
 const CalendarPage = lazy(() => import('@/pages/Calendar').then(m => ({ default: m.CalendarPage })));
@@ -34,6 +35,7 @@ function App() {
             <Route path="nospace-dev" element={<NoSpaceDev />} />
             <Route path="dribbble-portfolio" element={<DribbblePortfolio />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

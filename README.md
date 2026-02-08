@@ -22,6 +22,7 @@ A modern HR task management dashboard built with React and TypeScript.
 - **Jest** - Unit and component testing
 - **React Testing Library** - Component testing utilities
 - **Playwright** - End-to-end testing
+- **GitHub Actions** - CI/CD pipeline for automated testing
 
 ## Installation
 
@@ -131,3 +132,11 @@ kiaboard/
 - Responsive design
 - Data tables with sorting and filtering using react table
 - Search functionality
+
+## CI/CD
+
+GitHub Actions workflow automatically runs on pull requests and pushes to `main` and `dev` branches:
+- Unit and component tests
+- End-to-end tests with Playwright
+- Production build verification
+- Playwright report artifacts on test failures
